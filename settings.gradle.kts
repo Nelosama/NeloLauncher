@@ -7,3 +7,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Nelo TV Launcher"
 include(":app")
+include(":fixtures")

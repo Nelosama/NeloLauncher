@@ -36,6 +36,18 @@ class LauncherPreferences(context: Context) {
     var animations: Boolean
         get() = prefs.getBoolean("animations", true)
         set(value) { prefs.edit().putBoolean("animations", value).apply() }
+    var clock: Boolean
+        get() = prefs.getBoolean("clock", true)
+        set(value) { prefs.edit().putBoolean("clock", value).apply() }
+    var slideshow: Boolean
+        get() = prefs.getBoolean("slideshow", false)
+        set(value) { prefs.edit().putBoolean("slideshow", value).apply() }
+    var rotationMinutes: Int
+        get() = prefs.getInt("rotationMinutes", 15).coerceIn(5, 60)
+        set(value) { prefs.edit().putInt("rotationMinutes", value.coerceIn(5, 60)).apply() }
+    var hidden: List<String>
+        get() = read("hidden")
+        set(value) { write("hidden", value) }
     var favorites: List<String>
         get() = read("favorites")
         set(value) { write("favorites", value) }
@@ -71,9 +83,13 @@ class IconCache(private val context: Context) {
     fun load(app: AppEntry): Bitmap? {
         synchronized(this) { cache.get(app.key)?.let { return it } }
         return try {
-            val drawable = context.packageManager.getActivityIcon(app.component)
-            val bitmap = Bitmap.createBitmap(128, 128, Bitmap.Config.ARGB_8888)
-            drawable.setBounds(0, 0, 128, 128)
+            val pm = context.packageManager
+            val banner = try { pm.getActivityBanner(app.component) ?: pm.getApplicationBanner(app.component.packageName) } catch (_: Exception) { null }
+            val drawable = banner ?: pm.getActivityIcon(app.component)
+            val width = if (banner != null) 320 else 128
+            val height = if (banner != null) 180 else 128
+            val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+            drawable.setBounds(0, 0, width, height)
             drawable.draw(Canvas(bitmap))
             synchronized(this) { cache.put(app.key, bitmap) }
             bitmap

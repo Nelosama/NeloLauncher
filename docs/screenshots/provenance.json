@@ -1,0 +1,18 @@
+{
+  "origin": "Android API 30 View hierarchy rendered by Robolectric 4.14.1 native Skia; not a device or emulator capture",
+  "test_data_only": true,
+  "images": [
+    {
+      "file": "home-native-api30.png",
+      "width": 1920,
+      "height": 1080,
+      "sha256": "53d0a92481fac89bdd944a43becd0ad33691e963f7374d11685d91fce3ee7190"
+    },
+    {
+      "file": "wallpaper-native-api30.png",
+      "width": 1920,
+      "height": 1080,
+      "sha256": "543fa2cd633f9c6795ce58fc73fda8d9f469558040053cd69d78425a35bdf3fc"
+    }
+  ]
+}

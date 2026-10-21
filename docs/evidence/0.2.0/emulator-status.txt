@@ -1,0 +1,15 @@
+Android TV 11 / API 30 x86; profile tv_720p; 1024 MB configured; 1 vCPU; no KVM.
+ADB remained offline. No 0.2.0 instrumented or physical tests are counted as passed.
+
+Emulator 37.2.12 diagnostic excerpt:
+
+v020-emulator.log
+INFO         | Android emulator version 37.2.12.0 (build_id 16428233) (CL:N/A)
+WARNING      | x86 emulation may not work without hardware acceleration!
+ERROR        | Could not take screenshot, error: -1
+ERROR        | Failed to take a screenshot of display: 0, received: (0x0)
+
+v020-emulator31.log
+INFO    | Android emulator version 31.3.10.0 (build_id 8807927) (CL:N/A)
+WARNING | x86 emulation may not work without hardware acceleration!
+ERROR   | take screenshot failed

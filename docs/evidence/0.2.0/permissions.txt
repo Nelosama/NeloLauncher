@@ -1,0 +1,2 @@
+package: tv.nelo.launcher
+uses-permission: name='android.permission.READ_EXTERNAL_STORAGE' maxSdkVersion='32'

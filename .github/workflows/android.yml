@@ -16,10 +16,12 @@ jobs:
       - uses: android-actions/setup-android@v3
       - uses: gradle/actions/setup-gradle@v4
       - run: sdkmanager 'platforms;android-35' 'build-tools;34.0.0'
-      - run: ./gradlew assembleDebug lintDebug assembleDebugAndroidTest
+      - run: ./gradlew :app:assembleDebug :app:lintDebug :app:testDebugUnitTest :app:assembleDebugAndroidTest :fixtures:assembleDebug
       - uses: actions/upload-artifact@v4
         with:
           name: nelo-tv-debug
           path: |
             app/build/outputs/apk/debug/*.apk
             app/build/reports/lint-results-debug.html
+            app/build/reports/tests/testDebugUnitTest/
+            app/build/outputs/native-view-renders/

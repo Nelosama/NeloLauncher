@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tv.nelo.launcher.DesignRuntimeTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-21T06:01:29" hostname="f3069e1c1cdb" time="12.422">
+  <properties/>
+  <testcase name="homeRendersNativeViewsAndKeepsFocusAfterResume" classname="tv.nelo.launcher.DesignRuntimeTest" time="11.262"/>
+  <testcase name="internalInboxBrowsesWebpWithoutStoragePermission" classname="tv.nelo.launcher.DesignRuntimeTest" time="0.192"/>
+  <testcase name="wallpaperUiPreviewsBeforeApplyingAndFiltersDocumentStubs" classname="tv.nelo.launcher.DesignRuntimeTest" time="0.839"/>
+  <testcase name="prepareDoesNotApplyAndGallerySurvivesStoreRecreation" classname="tv.nelo.launcher.DesignRuntimeTest" time="0.128"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>
