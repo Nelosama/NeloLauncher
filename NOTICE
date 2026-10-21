@@ -1,0 +1,11 @@
+Nelo TV Launcher is an independently implemented Kotlin/Android launcher.
+No source code, artwork, icons or binaries were copied from FLauncher,
+LTvLauncher, Apple, Netflix, Amazon or Spotify. Application icons are loaded
+at runtime from installed applications and remain their owners' property.
+FLauncher and LTvLauncher were evaluated as alternatives; their GPLv3 code
+is not incorporated into this project. See docs/RESEARCH.md for sources.
+
+Runtime dependency: Kotlin standard library 2.0.21, JetBrains s.r.o. and Kotlin
+Programming Language contributors, Apache License 2.0 (licenses/).
+The Gradle wrapper (Gradle, Inc. and contributors) is Apache License 2.0.
+Android framework APIs are supplied by the device, not bundled in this APK.
