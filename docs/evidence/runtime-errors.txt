@@ -1,0 +1,43 @@
+--------- beginning of kernel
+--------- beginning of main
+--------- beginning of system
+--------- beginning of crash
+10-21 04:55:06.228  1980  1980 E AndroidRuntime: FATAL EXCEPTION: main
+10-21 04:55:06.228  1980  1980 E AndroidRuntime: Process: com.google.android.sdksetup, PID: 1980
+10-21 04:55:06.228  1980  1980 E AndroidRuntime: DeadSystemException: The system died; earlier logs will point to the root cause
+10-21 04:55:06.291  2274  2274 E AndroidRuntime: FATAL EXCEPTION: main
+10-21 04:55:06.291  2274  2274 E AndroidRuntime: Process: com.android.phone, PID: 2274
+10-21 04:55:06.291  2274  2274 E AndroidRuntime: DeadSystemException: The system died; earlier logs will point to the root cause
+10-21 04:55:06.559  1956  2218 E AndroidRuntime: FATAL EXCEPTION: fonts
+10-21 04:55:06.559  1956  2218 E AndroidRuntime: Process: com.google.android.deskclock, PID: 1956
+10-21 04:55:06.559  1956  2218 E AndroidRuntime: DeadSystemException: The system died; earlier logs will point to the root cause
+10-21 04:55:06.599   864  1032 E AndroidRuntime: FATAL EXCEPTION: SysUiBg
+10-21 04:55:06.599   864  1032 E AndroidRuntime: Process: com.android.systemui, PID: 864
+10-21 04:55:06.599   864  1032 E AndroidRuntime: DeadSystemException: The system died; earlier logs will point to the root cause
+10-21 04:55:06.764  2159  2159 E AndroidRuntime: FATAL EXCEPTION: main
+10-21 04:55:06.764  2159  2159 E AndroidRuntime: Process: com.google.android.inputmethod.latin, PID: 2159
+10-21 04:55:06.764  2159  2159 E AndroidRuntime: DeadSystemException: The system died; earlier logs will point to the root cause
+10-21 04:55:06.772  2037  2037 E AndroidRuntime: FATAL EXCEPTION: main
+10-21 04:55:06.772  2037  2037 E AndroidRuntime: Process: com.android.bluetooth, PID: 2037
+10-21 04:55:06.772  2037  2037 E AndroidRuntime: DeadSystemException: The system died; earlier logs will point to the root cause
+10-21 04:55:06.776  2338  2338 E AndroidRuntime: FATAL EXCEPTION: main
+10-21 04:55:06.776  2338  2338 E AndroidRuntime: Process: com.google.android.providers.media.module, PID: 2338
+10-21 04:55:06.776  2338  2338 E AndroidRuntime: DeadSystemException: The system died; earlier logs will point to the root cause
+10-21 04:55:06.793  1813  2359 E AndroidRuntime: FATAL EXCEPTION: pool-3-thread-1
+10-21 04:55:06.793  1813  2359 E AndroidRuntime: Process: com.google.android.apps.messaging:rcs, PID: 1813
+10-21 04:55:06.793  1813  2359 E AndroidRuntime: DeadSystemException: The system died; earlier logs will point to the root cause
+10-21 04:55:06.809  2308  2308 E AndroidRuntime: FATAL EXCEPTION: main
+10-21 04:55:06.809  2308  2308 E AndroidRuntime: Process: com.google.android.googlequicksearchbox:search, PID: 2308
+10-21 04:55:06.809  2308  2308 E AndroidRuntime: DeadSystemException: The system died; earlier logs will point to the root cause
+10-21 04:55:07.121  2221  2221 E AndroidRuntime: FATAL EXCEPTION: main
+10-21 04:55:07.121  2221  2221 E AndroidRuntime: Process: com.google.android.gms.persistent, PID: 2221
+10-21 04:55:07.121  2221  2221 E AndroidRuntime: DeadSystemException: The system died; earlier logs will point to the root cause
+10-21 04:55:07.166  2251  2251 E AndroidRuntime: FATAL EXCEPTION: main
+10-21 04:55:07.166  2251  2251 E AndroidRuntime: Process: com.google.android.gms, PID: 2251
+10-21 04:55:07.166  2251  2251 E AndroidRuntime: DeadSystemException: The system died; earlier logs will point to the root cause
+10-21 04:55:07.260  2119  2119 E AndroidRuntime: FATAL EXCEPTION: main
+10-21 04:55:07.260  2119  2119 E AndroidRuntime: Process: tv.nelo.launcher, PID: 2119
+10-21 04:55:07.260  2119  2119 E AndroidRuntime: DeadSystemException: The system died; earlier logs will point to the root cause
+10-21 04:55:07.275  2188  2188 E AndroidRuntime: FATAL EXCEPTION: main
+10-21 04:55:07.275  2188  2188 E AndroidRuntime: Process: com.google.process.gapps, PID: 2188
+10-21 04:55:07.275  2188  2188 E AndroidRuntime: DeadSystemException: The system died; earlier logs will point to the root cause

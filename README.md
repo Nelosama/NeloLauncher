@@ -2,6 +2,10 @@
 
 Launcher nativo Kotlin para Android TV: aplicaciones locales, favoritas y fondo personal, sin anuncios, permisos de red ni telemetría. Primera versión 0.1.0, orientada a Android 11 y mandos D-pad. [Investigación y decisión técnica](docs/RESEARCH.md) · [Pruebas y límites](docs/TEST_REPORT.md).
 
+[Descargar APK de depuración](https://github.com/Nelosama/NeloLauncher/raw/refs/heads/main/dist/nelo-tv-0.1.0-debug.apk) · [SHA-256](dist/SHA256SUMS)
+
+**Estado de validación:** compila, pasa lint y se instala en Android 11 emulado. Las pruebas de ejecución se abortaron por un fallo del sistema emulado; todavía no se certifica la funcionalidad completa, el consumo ni los 60 FPS en el Skyworth. Consulta los registros del [informe de pruebas](docs/TEST_REPORT.md).
+
 ## Compilar
 
 Abre este directorio en Android Studio y deja que sincronice Gradle. Instala Android SDK 35 y Build Tools 34.0.0. JDK 17 o 21, Gradle wrapper 8.9, Android Gradle Plugin 8.7.3 y Kotlin 2.0.21. No se necesita Flutter.

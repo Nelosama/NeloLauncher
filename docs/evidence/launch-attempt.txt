@@ -1,0 +1,6 @@
+Starting: Intent { cmp=tv.nelo.launcher/.MainActivity }
+Status: timeout
+LaunchState: UNKNOWN (-1)
+Activity: com.google.android.sdksetup/.DefaultActivity
+WaitTime: 23267
+Complete

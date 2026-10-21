@@ -18,16 +18,24 @@ El informe de lint conserva advertencias sobre cadenas en español sin recursos 
 
 ## Pruebas instrumentadas
 
-Los resultados y observaciones del emulador se incorporan al completar la ejecución. Se utiliza una imagen Android 11/API 30 Google APIs x86_64 con perfil de pantalla TV de 1280 × 720, D-pad y renderizado SwiftShader; no es una imagen de firmware Skyworth ni una certificación Android TV. Sin KVM, la CPU se emula por software.
+Resultado: **instalación correcta; ejecución funcional e instrumentación bloqueadas por fallos del sistema emulado**. Se utilizó una imagen Android 11/API 30 Google APIs x86_64 con perfil de pantalla TV de 1280 × 720, D-pad, 2 GB de RAM configurada y renderizado SwiftShader; no es una imagen de firmware Skyworth ni una certificación Android TV. Sin KVM, la CPU se emula por software.
 
-Cobertura automatizada prevista en `LauncherSmokeTest`:
+El intento inicial con 1 GB produjo un ANR de System UI y pérdida temporal del servicio Activity durante el primer arranque del sistema, antes de ejecutar Nelo. Se reinició el emulador con 2 GB para separar las pruebas funcionales de ese problema del entorno. Esto no permite sacar conclusiones sobre la viabilidad de Nelo con 1 GB físico.
+
+Las cuatro pruebas de `LauncherSmokeTest` compilan. Su cobertura diseñada es:
 
 1. Resolución HOME, descubrimiento de apps exportadas, una entrada por paquete y exclusión del propio launcher.
 2. Persistencia de favoritas y orden al recrear el almacén de preferencias.
 3. Importación de imagen 2560 × 1440 con salida acotada, lectura posterior y conservación del fondo ante archivo inválido.
 4. Renderizado del catálogo, eventos D-pad, menú de aplicación, cambio de favorita, ajustes y apertura/regreso desde Ajustes Android mediante una celda real del launcher.
 
-Los archivos de evidencia indicarán cuáles se ejecutaron y su resultado; no se consideran aprobadas solo por compilar.
+**Resultado real: ninguna prueba instrumentada se considera aprobada.** El runner terminó con `INSTRUMENTATION_ABORTED: System has crashed`. Tras otro intento con 2 GB y tiempos de espera ampliados en el entorno, el sistema también murió; Nelo y varias aplicaciones de Google recibieron `DeadSystemException`. El usuario del emulador llegó a `RUNNING_UNLOCKED`, pero no se consiguió una sesión estable de Nelo.
+
+Evidencias: [aborto del runner](evidence/instrumentation-aborted.txt), [excepciones de procesos](evidence/runtime-errors.txt), [intento de apertura](evidence/launch-attempt.txt), [ANR de System UI observado en el primer arranque](evidence/emulator-system-ui-anr.png), [compilación](evidence/build-checks.txt) y [lint](evidence/lint-results-debug.xml).
+
+El APK de `dist/` se instaló con `adb install -r` y obtuvo `Success`; el APK de pruebas también se instaló. Esto verifica instalación, no funcionamiento completo. El fallo del sistema emulado impide aislar y certificar el comportamiento de la aplicación: no se afirma que esté libre de defectos. La entrega es una primera implementación experimental compilada, pendiente de validación funcional en un entorno Android estable y en el dispositivo objetivo.
+
+**No hay mediciones válidas de inicio, RAM o fluidez de Nelo.** El `am start -W` disponible devolvió `Status: timeout` y una actividad de configuración del emulador; no representa el tiempo de inicio del launcher. No se publican esos valores como benchmark y no se afirma alcanzar 60 FPS. El ajuste del entorno no forma parte del APK ni altera sus tiempos de espera.
 
 ## Protocolo para el Skyworth
 
@@ -37,7 +45,7 @@ Conserva FLauncher y el launcher de fábrica. Empieza abriendo Nelo explícitame
 ./scripts/measure.sh resultados-skyworth
 ```
 
-El script no cambia HOME ni modifica otros paquetes. Reinicia únicamente el proceso de Nelo para cinco lanzamientos, guarda `am start -W`, deja dos segundos entre muestras, captura PSS con `dumpsys meminfo` y solicita una sesión manual de navegación antes de extraer `gfxinfo framestats`. No borra logcat global.
+El script no cambia HOME ni modifica otros paquetes. Reinicia únicamente el proceso de Nelo para cinco lanzamientos, guarda `am start -W`, deja dos segundos entre muestras y 30 segundos de estabilización antes de capturar PSS con `dumpsys meminfo` y solicita una sesión manual de navegación antes de extraer `gfxinfo framestats`. No borra logcat global.
 
 - **Inicio**: reportar mediana y rango de `TotalTime`/`WaitTime`, distinguir proceso frío de caché de disco fría. El log `NeloStartup catalog_ready_ms` mide desde `onCreate` hasta el catálogo disponible, no incluye necesariamente la carga de todos los iconos. `reportFullyDrawn` se emite al programar el siguiente frame del catálogo y tampoco certifica la presentación GPU completa.
 - **RAM**: comparar Total PSS y heap Java/nativo después de 30 segundos estable, después de navegar y tras 20 ciclos de apertura/regreso. El LRU de 3 MiB limita sus entradas, no todo el uso de memoria; las celdas visibles también retienen bitmaps.

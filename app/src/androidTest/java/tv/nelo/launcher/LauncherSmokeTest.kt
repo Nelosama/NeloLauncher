@@ -122,9 +122,18 @@ class LauncherSmokeTest {
             }
             instrumentation.waitForIdleSync()
             instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_CENTER)
-            instrumentation.waitForIdleSync()
+            val externalDeadline = android.os.SystemClock.uptimeMillis() + 20000
+            while (instrumentation.uiAutomation.rootInActiveWindow?.packageName != "com.android.settings" && android.os.SystemClock.uptimeMillis() < externalDeadline) {
+                android.os.SystemClock.sleep(100)
+            }
+            assertEquals("com.android.settings", instrumentation.uiAutomation.rootInActiveWindow?.packageName?.toString())
             instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
-            instrumentation.waitForIdleSync()
+            var returned = false
+            val returnDeadline = android.os.SystemClock.uptimeMillis() + 15000
+            while (!returned && android.os.SystemClock.uptimeMillis() < returnDeadline) {
+                instrumentation.runOnMainSync { returned = activity.hasWindowFocus() }
+                if (!returned) android.os.SystemClock.sleep(100)
+            }
             instrumentation.runOnMainSync {
                 assertFalse(activity.isFinishing)
                 assertTrue("Focus must return from the external application", activity.hasWindowFocus())

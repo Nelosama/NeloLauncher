@@ -14,6 +14,7 @@ for sample in 1 2 3 4 5; do
   adb shell am start -W -n tv.nelo.launcher/.MainActivity > "$out/cold-$sample.txt"
   adb shell sleep 2
 done
+adb shell sleep 30
 adb shell dumpsys meminfo tv.nelo.launcher > "$out/meminfo-before-navigation.txt"
 adb shell dumpsys gfxinfo tv.nelo.launcher reset > "$out/gfx-reset.txt"
 printf 'Navega con el mando durante 60 segundos; abre y cierra aplicaciones. Pulsa Enter al terminar.\n'
