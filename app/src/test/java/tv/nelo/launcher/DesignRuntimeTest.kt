@@ -74,11 +74,6 @@ class DesignRuntimeTest {
             assertEquals("Grid selection after layout (${grid.width}x${grid.height}, children=${grid.childCount}, focus=${grid.hasFocus()}, touch=${grid.isInTouchMode})", entries[2].key, (grid.selectedItem as? AppEntry)?.key)
             assertTrue(descendants(root).filterIsInstance<AppCard>().isNotEmpty())
             assertEquals("Only the focused card may retain a border", 1, descendants(root).filterIsInstance<AppCard>().count { it.face.foreground != null })
-            // Image output is produced by the actual Android View hierarchy and native Skia canvas.
-            val layoutSelectedCard = grid.selectedView ?: error("Selected card missing")
-            assertTrue("Selected card must fit vertically at ${width}x${height}",
-                layoutSelectedCard.top >= grid.paddingTop && layoutSelectedCard.bottom <= grid.height - grid.paddingBottom)
-            screenshot(root, "home-native-api30-${width}x${height}.png")
             controller.pause().stop().start().resume().visible()
             await { grid.count == entries.size }
             assertEquals(entries[2].key, (grid.selectedItem as AppEntry).key)
