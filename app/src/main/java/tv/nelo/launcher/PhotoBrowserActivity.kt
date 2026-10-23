@@ -44,8 +44,8 @@ class PhotoBrowserActivity : Activity() {
     private fun allowed(path: String) = path == inbox.path || (Build.VERSION.SDK_INT <= 32 && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
     private fun showRoots() {
         root = null; folder = null; version++
-        title.text = "Fotografías locales"
-        hint.text = "La bandeja de Nelo funciona sin permisos. Puedes copiar fotos por ADB."
+        title.setText(R.string.local_photos)
+        hint.setText(R.string.inbox_hint)
         list.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listOf("Bandeja de Nelo · sin permisos", "Explorar almacenamiento del TV"))
         list.setOnItemClickListener { _, _, position, _ ->
             if (position == 0) { root = inbox; show(inbox) }
@@ -63,7 +63,7 @@ class PhotoBrowserActivity : Activity() {
             manager.storageVolumes.filter { !it.isPrimary }.mapNotNull { it.directory }.forEach { paths.add(it) }
         }
         val roots = paths.distinctBy { it.absolutePath }
-        title.text = "Elige una carpeta"
+        title.setText(R.string.choose_folder)
         list.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, roots.map { it.path })
         list.setOnItemClickListener { _, _, position, _ -> root = roots[position]; show(roots[position]) }
         list.setSelection(0)
@@ -75,7 +75,7 @@ class PhotoBrowserActivity : Activity() {
         if (canonical != boundary.canonicalFile && !canonical.path.startsWith(boundary.canonicalPath + File.separator)) return
         folder = canonical
         title.text = canonical.name.ifBlank { "Fotografías" }
-        hint.text = "Leyendo carpeta…"
+        hint.setText(R.string.reading_folder)
         val request = ++version
         worker.execute {
             val children = try { canonical.listFiles()?.filter { !it.name.startsWith('.') && (it.isDirectory || it.extension.lowercase() in setOf("jpg", "jpeg", "png", "webp")) }?.sortedWith(compareBy<File> { !it.isDirectory }.thenBy(String.CASE_INSENSITIVE_ORDER) { it.name }) } catch (_: Exception) { null }

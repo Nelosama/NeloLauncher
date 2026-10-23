@@ -1,5 +1,9 @@
 # Verificación de Nelo TV Launcher 0.2.0
 
+Actualización de estabilización: [resultados y límites](STABILITY_0.2.0.md).
+Los resultados siguientes corresponden a la sesión anterior del 20 de octubre,
+no certifican el nuevo commit ni la firma de nuevos runners.
+
 Fecha de trabajo: 20 de octubre de 2026, zona America/Tegucigalpa.
 
 ## Resultado y alcance

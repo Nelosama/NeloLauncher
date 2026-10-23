@@ -100,3 +100,16 @@ Para medir el dispositivo sin cambiar su HOME:
 ```
 
 Código propio bajo MIT. Conserva `LICENSE`, `NOTICE` y `licenses/` al redistribuir. La [evaluación de FLauncher/LTvLauncher](docs/RESEARCH.md) y los [resultados históricos de 0.1.0](docs/TEST_REPORT_0.1.0.md) permanecen disponibles.
+
+## Estabilización de CI 0.2.0
+
+La rama `codex/fix-nelo-launcher-ci-stability` corrige la instalación del SDK:
+`setup-android@v3` recibía implícitamente `tools platform-tools`; ahora se
+declaran platform-tools, API 35 y Build Tools 34.0.0, sin el paquete obsoleto
+`tools`. Se conservan las cinco tareas de validación y se publican también
+APK de instrumentación, fixture y reportes cuando falla una comprobación.
+
+Java 17, Gradle 8.9, AGP 8.7.3 y Kotlin 2.0.21 se conservan. Los APK debug
+de cada runner pueden usar certificados diferentes: comparar el certificado
+con 0.1.0 antes de intentar actualizar. No desinstalar ni borrar datos para
+resolver una firma incompatible. Véase [informe de estabilización](docs/STABILITY_0.2.0.md).

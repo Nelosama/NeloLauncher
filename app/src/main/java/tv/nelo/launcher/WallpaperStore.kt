@@ -63,7 +63,7 @@ class WallpaperStore(private val context: Context) {
     fun delete(photo: Photo) {
         if (currentId == photo.id) clear()
         check(!photo.file.exists() || photo.file.delete())
-        prefs.edit().remove("label_${photo.id}").commit()
+        check(prefs.edit().remove("label_${photo.id}").commit())
     }
     fun load(): Bitmap? = photos().firstOrNull { it.id == currentId }?.let { prepare(Uri.fromFile(it.file)) }
     fun next(): Bitmap? {

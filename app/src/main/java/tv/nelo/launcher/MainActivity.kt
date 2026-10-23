@@ -174,7 +174,7 @@ class MainActivity : Activity() {
         cards.forEach { it.cancelAnimations() }; cards.clear(); dock.removeAllViews()
         val pages = ((favorites.size + columns - 1) / columns).coerceAtLeast(1)
         dockPage = dockPage.coerceIn(0, pages - 1)
-        dockTitle.text = "Favoritas" + if (pages > 1) "   ${dockPage + 1} / $pages" else ""
+        dockTitle.text = if (pages > 1) getString(R.string.favorites_page, dockPage + 1, pages) else getString(R.string.favorites)
         if (favorites.isEmpty()) {
             dock.addView(tvButton("Añadir favoritas") {
                 toast("Mantén OK o pulsa Menú sobre una aplicación para añadirla a favoritas")
