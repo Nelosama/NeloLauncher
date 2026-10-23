@@ -113,3 +113,5 @@ inicio y frames. No hay acceso físico ni instrumentación ejecutada en este tra
 
 NO MERGE hasta disponer de pipeline completo verde y revisión de las evidencias.
 Las pruebas físicas pendientes limitan cualquier afirmación de estabilidad final.
+
+Diagnóstico ampliado, comparación real con Actions y recuperación de clave: [APK_SIGNING.md](APK_SIGNING.md).

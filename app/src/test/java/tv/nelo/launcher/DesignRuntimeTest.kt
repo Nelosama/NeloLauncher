@@ -67,6 +67,16 @@ class DesignRuntimeTest {
             Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(200))
             root.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY))
             root.layout(0, 0, width, height)
+            // Exercise framework D-pad dispatch, not only programmatic setSelection.
+            for ((key, expected) in listOf(android.view.KeyEvent.KEYCODE_DPAD_RIGHT to 3,
+                                          android.view.KeyEvent.KEYCODE_DPAD_LEFT to 2)) {
+                grid.dispatchKeyEvent(android.view.KeyEvent(android.view.KeyEvent.ACTION_DOWN, key))
+                grid.dispatchKeyEvent(android.view.KeyEvent(android.view.KeyEvent.ACTION_UP, key))
+                Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(200))
+                root.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY))
+                root.layout(0, 0, width, height)
+                assertEquals("D-pad selection at ${width}x${height}", expected, grid.selectedItemPosition)
+            }
             val layoutSelectedCard = grid.selectedView ?: error("Selected card missing")
             assertTrue("Selected card must fit vertically at ${width}x${height}",
                 layoutSelectedCard.top >= grid.paddingTop && layoutSelectedCard.bottom <= grid.height - grid.paddingBottom)

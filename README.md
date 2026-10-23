@@ -17,9 +17,9 @@ Sin publicidad, recomendaciones comerciales, Internet, telemetría, servicios re
 
 ## Instalar sobre 0.1.0 en Windows
 
-La firma del APK 0.2.0 entregado coincide con la del APK 0.1.0 publicado en este repositorio. El código de versión sube de 1 a 2. No desinstales la versión anterior ni borres sus datos.
+Solo el APK histórico 0.2.0 de dist/ comparte firma con el 0.1.0 publicado; no contiene las correcciones del PR #1. Los APK locales y de Actions del PR tienen firmas diferentes y no deben usarse para actualizar esa instalación. Véase [diagnóstico y recuperación de firma](docs/APK_SIGNING.md). El código de versión sube de 1 a 2. No desinstales la versión anterior ni borres sus datos.
 
-En PowerShell, con Platform Tools y el TV conectado/autorizado:
+Los siguientes comandos son únicamente para un candidato cuya firma ya se haya comparado con el APK instalado y con autorización para modificar el TV. No ejecutarlos con el APK de Actions incompatible. En PowerShell, con Platform Tools y el TV conectado/autorizado:
 
 ```powershell
 $adb = "C:\platform-tools\adb.exe"  # Ajusta esta ruta

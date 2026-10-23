@@ -1,5 +1,7 @@
 # Verificación de Nelo TV Launcher 0.2.0
 
+Firma y preservación de datos: [diagnóstico y procedimiento](APK_SIGNING.md).
+
 Actualización de estabilización: [resultados y límites](STABILITY_0.2.0.md).
 Los resultados siguientes corresponden a la sesión anterior del 20 de octubre,
 no certifican el nuevo commit ni la firma de nuevos runners.

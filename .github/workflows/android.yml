@@ -20,11 +20,21 @@ jobs:
           cmdline-tools-version: '12266719'
       - uses: gradle/actions/setup-gradle@v4
       - run: ./gradlew :app:assembleDebug :app:lintDebug :app:testDebugUnitTest :app:assembleDebugAndroidTest :fixtures:assembleDebug
+      - name: Record APK identities and SHA-256
+        env:
+          SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+          BUILD_COMMIT: ${{ github.sha }}
+        run: >-
+          python3 scripts/apk_identity.py manifest --output-dir build/apk-identity
+          --source-commit "$SOURCE_COMMIT" --build-commit "$BUILD_COMMIT"
+          --run-id "$GITHUB_RUN_ID"
+          app/build/outputs/apk/debug/app-debug.apk
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: nelo-tv-debug
+          name: nelo-tv-debug-${{ github.sha }}
           path: |
+            build/apk-identity/
             app/build/outputs/apk/debug/*.apk
             app/build/outputs/apk/androidTest/debug/*.apk
             fixtures/build/outputs/apk/debug/*.apk
