@@ -26,12 +26,39 @@ quepa verticalmente entre los paddings de la cuadrícula.
 
 ## Validación
 
-En curso: compilación completa local con JDK 17.0.12, Gradle 8.9, AGP 8.7.3,
-Kotlin 2.0.21 y SDK 35. El entorno requiere proxy Java y truststore del sistema;
-son ajustes externos al repositorio.
-La suite se amplía a resolución 1280×720 con tarjeta enfocada completa, recuperación del enfoque y a
-rotación con una foto dañada, persistencia y eliminación de metadatos.
-El informe final registrará resultados y enlaces de Actions.
+Compilación completa local **aprobada** con JDK 17.0.12, Gradle 8.9,
+AGP 8.7.3, Kotlin 2.0.21 y SDK 35; las cinco tareas solicitadas terminaron
+con BUILD SUCCESSFUL (108 tareas, incluidas las ya actualizadas).
+Comando: `./gradlew :app:assembleDebug :app:lintDebug :app:testDebugUnitTest :app:assembleDebugAndroidTest :fixtures:assembleDebug`.
+El entorno necesitó proxy Java/truststore y Kotlin en proceso, ajustes externos
+al repositorio. APK principal, instrumentación y fixture generados.
+
+**6 pruebas, 0 fallos, 0 errores, 0 omitidas**, runtime API 30 (Android 11).
+Las cuatro pruebas originales se conservan; se añade inicio/enfoque a 720p
+y rotación que omite foto dañada más persistencia de favoritas, orden,
+ocultas y ajustes. Las pruebas de inicio a 1080p/720p comprueban la geometría
+vertical completa de la tarjeta seleccionada y recuperación al reanudar.
+Se inspeccionó el nuevo render 720p en docs/screenshots; es evidencia JVM.
+No se ejecutó instrumentación en dispositivo.
+
+Lint: **0 errores, 5 advertencias**, frente a las 13 históricas; sin baseline,
+supresiones ni desactivación de checks. Evidencias:
+[build](evidence/stability/build-checks.txt),
+[JUnit](evidence/stability/unit-tests.xml),
+[lint](evidence/stability/lint.xml),
+[firma nueva](evidence/stability/local-signature.txt),
+[firma 0.1.0](evidence/stability/original-signature.txt).
+
+Durante la ampliación de tests hubo una compilación fallida por declaración
+duplicada en la prueba; se eliminó el bloque repetido antes de esta validación.
+Los mensajes de decodificador en stderr corresponden a los archivos corruptos
+que las pruebas rechazan intencionalmente.
+
+PR: https://github.com/Nelosama/NeloLauncher/pull/1.
+El primer pipeline corregido pasó SDK, cinco tareas y artefactos:
+https://github.com/Nelosama/NeloLauncher/actions/runs/39888738536.
+La ejecución del código final se verifica en
+https://github.com/Nelosama/NeloLauncher/actions/runs/39889066996.
 
 ## Diseño y rendimiento
 
@@ -58,7 +85,7 @@ Back predictivo API 33+ (ignorado en Android 11); VectorRaster por banner TV
 Las APIs Kotlin obsoletas de memoria y Back siguen siendo necesarias para
 Android 11; no se cambia ese comportamiento para eliminar diagnósticos.
 No se declara traducción completa: solo se extraen las cadenas señaladas.
-El número definitivo de lint se registra al finalizar la compilación.
+Resultado final local: cinco advertencias, cero errores.
 
 ## Firma y distribución
 
