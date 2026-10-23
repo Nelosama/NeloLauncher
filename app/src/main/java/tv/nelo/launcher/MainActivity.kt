@@ -38,6 +38,7 @@ class MainActivity : Activity() {
     private var selectedArea = "grid"
     private var dockPage = 0
     private var columns = 5
+    private var compactHeight = false
     private var scanVersion = 0
     private var wallpaperVersion = 0
     private var resumed = false
@@ -74,6 +75,7 @@ class MainActivity : Activity() {
         buildUi()
     }
     private fun buildUi() {
+        compactHeight = resources.configuration.screenHeightDp < 400
         columns = when { resources.configuration.screenWidthDp >= 800 -> 5; resources.configuration.screenWidthDp >= 600 -> 4; else -> 3 }
         val root = FrameLayout(this).apply { background = AuroraDrawable(); clipChildren = false }
         background = ImageView(this).apply { scaleType = ImageView.ScaleType.CENTER_CROP; importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO }
@@ -81,22 +83,22 @@ class MainActivity : Activity() {
         root.addView(View(this).apply {
             background = GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(0x220A101C, 0x110A101C, 0xC909101B.toInt()))
         }, FrameLayout.LayoutParams(-1, -1))
-        val content = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setPadding(dp(40), dp(22), dp(40), dp(12)); clipChildren = false; clipToPadding = false }
+        val content = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setPadding(dp(40), dp(if (compactHeight) 10 else 22), dp(40), dp(if (compactHeight) 8 else 12)); clipChildren = false; clipToPadding = false }
         root.addView(content, FrameLayout.LayoutParams(-1, -1))
         val header = LinearLayout(this).apply { gravity = Gravity.CENTER_VERTICAL }
-        header.addView(label("nelo", 25).apply { typeface = android.graphics.Typeface.create("sans-serif-light", android.graphics.Typeface.NORMAL); contentDescription = "Nelo TV Launcher" }, LinearLayout.LayoutParams(0, dp(42), 1f))
+        header.addView(label("nelo", 25).apply { typeface = android.graphics.Typeface.create("sans-serif-light", android.graphics.Typeface.NORMAL); contentDescription = "Nelo TV Launcher" }, LinearLayout.LayoutParams(0, dp(if (compactHeight) 36 else 42), 1f))
         clock = TextClock(this).apply { format12Hour = "h:mm a"; format24Hour = "HH:mm"; textSize = 15f; setTextColor(0xFFDCE3EE.toInt()); setPadding(dp(18), 0, dp(20), 0); visibility = if (prefs.clock) View.VISIBLE else View.GONE }
         header.addView(clock)
         settingsButton = tvButton("Configuración") { settings() }
         header.addView(settingsButton, LinearLayout.LayoutParams(-2, dp(36)))
         content.addView(header)
-        hero = label("Tu espacio", 32).apply { typeface = android.graphics.Typeface.create("sans-serif-light", android.graphics.Typeface.NORMAL); gravity = Gravity.BOTTOM; setPadding(dp(6), 0, 0, dp(18)); setShadowLayer(dp(3).toFloat(), 0f, dp(1).toFloat(), 0x55000000) }
-        content.addView(hero, LinearLayout.LayoutParams(-1, dp(if (resources.configuration.screenHeightDp < 480) 52 else 83)))
+        hero = label("Tu espacio", if (compactHeight) 24 else 32).apply { typeface = android.graphics.Typeface.create("sans-serif-light", android.graphics.Typeface.NORMAL); gravity = Gravity.BOTTOM; setPadding(dp(6), 0, 0, dp(if (compactHeight) 2 else 18)); setShadowLayer(dp(3).toFloat(), 0f, dp(1).toFloat(), 0x55000000) }
+        content.addView(hero, LinearLayout.LayoutParams(-1, dp(if (compactHeight) 28 else if (resources.configuration.screenHeightDp < 480) 52 else 83)))
         dockTitle = label("Favoritas", 13, 0xFFDBE2EF.toInt()).apply { setPadding(dp(8), 0, 0, 0) }
-        content.addView(dockTitle, LinearLayout.LayoutParams(-1, dp(25)))
+        content.addView(dockTitle, LinearLayout.LayoutParams(-1, dp(if (compactHeight) 20 else 25)))
         dock = LinearLayout(this).apply { id = View.generateViewId(); gravity = Gravity.CENTER_VERTICAL; background = rounded(0x60151C29, 24); setPadding(dp(12), dp(12), dp(12), dp(2)); clipChildren = false; clipToPadding = false }
-        content.addView(dock, LinearLayout.LayoutParams(-1, dp(124)))
-        content.addView(label("Aplicaciones", 14, 0xFFD7DFEC.toInt()).apply { setPadding(dp(8), dp(7), 0, 0) }, LinearLayout.LayoutParams(-1, dp(34)))
+        content.addView(dock, LinearLayout.LayoutParams(-1, dp(if (compactHeight) 112 else 124)))
+        content.addView(label("Aplicaciones", 14, 0xFFD7DFEC.toInt()).apply { setPadding(dp(8), dp(7), 0, 0) }, LinearLayout.LayoutParams(-1, dp(if (compactHeight) 24 else 34)))
         val body = FrameLayout(this).apply { clipChildren = false; clipToPadding = false }
         content.addView(body, LinearLayout.LayoutParams(-1, 0, 1f))
         grid = GridView(this).apply {
@@ -334,7 +336,7 @@ class MainActivity : Activity() {
         override fun getItem(position: Int) = visible[position]
         override fun getItemId(position: Int) = position.toLong()
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-            val card = convertView as? AppCard ?: AppCard(this@MainActivity).apply { layoutParams = AbsListView.LayoutParams(-1, dp(121)); isFocusable = false }
+            val card = convertView as? AppCard ?: AppCard(this@MainActivity).apply { layoutParams = AbsListView.LayoutParams(-1, dp(if (compactHeight) 96 else 121)); isFocusable = false }
             bind(card, visible[position])
             if (grid.hasFocus() && grid.selectedItemPosition == position) {
                 if (highlighted === card) card.focusCard(true, prefs.animations) else highlight(card)

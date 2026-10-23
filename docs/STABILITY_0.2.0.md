@@ -18,12 +18,18 @@ extracción Android 12+ que excluyen preferencias y archivos privados de copia
 cloud y transferencia; comprobación del resultado de commit al borrar metadatos.
 Sin nuevas dependencias, permisos ni cambios de HOME, paquete o versión.
 
+Defecto verificado a 720p con 640×360 dp: las alturas fijas dejaban solo una
+fracción de la tarjeta seleccionada visible. Para alturas inferiores a 400 dp
+se reduce cabecera, título, espacios y altura de celda; se conserva la estructura,
+la paginación y el diseño habitual. La prueba exige que la tarjeta seleccionada
+quepa verticalmente entre los paddings de la cuadrícula.
+
 ## Validación
 
 En curso: compilación completa local con JDK 17.0.12, Gradle 8.9, AGP 8.7.3,
 Kotlin 2.0.21 y SDK 35. El entorno requiere proxy Java y truststore del sistema;
 son ajustes externos al repositorio.
-La suite se amplía a resolución 1280×720 con recuperación del enfoque y a
+La suite se amplía a resolución 1280×720 con tarjeta enfocada completa, recuperación del enfoque y a
 rotación con una foto dañada, persistencia y eliminación de metadatos.
 El informe final registrará resultados y enlaces de Actions.
 
@@ -43,11 +49,25 @@ No hay mediciones nuevas de PSS, FPS ni retorno desde apps comerciales.
 La cola de carga puede acumular trabajo bajo navegación rápida; medir en el
 Skyworth antes de introducir cambios de concurrencia sin evidencia.
 
+## Advertencias justificadas
+
+Se mantienen sin supresiones generales: tres DiscouragedApi por orientación
+landscape de pantallas exclusivamente TV; UnusedAttribute por el opt-out de
+Back predictivo API 33+ (ignorado en Android 11); VectorRaster por banner TV
+320×180 dp. La orientación y el tamaño del banner preservan compatibilidad TV.
+Las APIs Kotlin obsoletas de memoria y Back siguen siendo necesarias para
+Android 11; no se cambia ese comportamiento para eliminar diagnósticos.
+No se declara traducción completa: solo se extraen las cadenas señaladas.
+El número definitivo de lint se registra al finalizar la compilación.
+
 ## Firma y distribución
 
 La clave privada original no está en el repositorio. Los APK históricos en
 dist no se sustituyen. Un APK generado con la clave debug del entorno/runner
-puede NO actualizar 0.1.0. Comparar SHA-256 del certificado con
+NO puede actualizar 0.1.0 en este entorno: certificado local
+3e57da43ea5bc41778ceb2ff516e36460632309963fc73a555250873ce3288b1,
+distinto del original. Se comprobó con apksigner en ambos archivos.
+Comparar SHA-256 del certificado con
 657ec9a97b2e399a172e266f5946bcce1142a1f00d7eb8fd1a307e4733b8078f.
 No desinstalar ni limpiar datos. Conservar 0.2.0/versionCode 2 para validación;
 el próximo APK distribuible debe incrementar el número de versión y utilizar
