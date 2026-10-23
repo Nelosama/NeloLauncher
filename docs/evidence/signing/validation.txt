@@ -1,0 +1,14 @@
+Static APK checks, not device installation or data restoration:
+- apksigner verify --min-sdk-version 30 succeeded for all four compared APKs.
+- Historical 0.1.0 -> historical 0.2.0: exit 0, compatible package/cert/version/minSdk.
+- Historical 0.1.0 -> local stabilized 0.2.0: exit 1, certificate differs.
+- Historical 0.1.0 -> Actions 39889217868: exit 1, certificate differs.
+- Historical 0.2.0 -> same historical 0.2.0: exit 1, versionCode not increasing.
+- Truncated APK: exit 2, signature rejected.
+- Signer using local key against original reference: exit 1; no output APK published.
+- Signer roundtrip using only a synthetic reference signed with local test key:
+  exit 0; output passes compare. This does NOT recover the original key.
+- Manifest generation and sha256sum -c: passed for local APK.
+- Original ZIP downloaded from artifact 12474545695:
+  4e927eadde91be00f4f42af0e297bfbfdbbfadc3fd2408302061742d2c4a5afe
+- No device commands, installations, HOME changes or data writes on Skyworth.

@@ -8,7 +8,7 @@
         <intent><action android:name="android.intent.action.OPEN_DOCUMENT" /><category android:name="android.intent.category.OPENABLE" /><data android:mimeType="image/*" /></intent>
         <intent><action android:name="android.intent.action.GET_CONTENT" /><category android:name="android.intent.category.OPENABLE" /><data android:mimeType="image/*" /></intent>
     </queries>
-    <application android:theme="@style/AppTheme" android:label="Nelo TV" android:icon="@drawable/ic_nelo" android:banner="@drawable/banner" android:allowBackup="false" android:enableOnBackInvokedCallback="false" android:supportsRtl="true" android:usesCleartextTraffic="false">
+    <application android:theme="@style/AppTheme" android:label="Nelo TV" android:icon="@drawable/ic_nelo" android:banner="@drawable/banner" android:allowBackup="false" android:fullBackupContent="false" android:dataExtractionRules="@xml/data_extraction_rules" android:enableOnBackInvokedCallback="false" android:supportsRtl="true" android:usesCleartextTraffic="false">
         <activity android:name=".PhotoBrowserActivity" android:exported="false" android:screenOrientation="landscape" />
         <activity android:name=".WallpaperActivity" android:exported="false" android:screenOrientation="landscape" />
         <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTask" android:screenOrientation="landscape" android:excludeFromRecents="true">

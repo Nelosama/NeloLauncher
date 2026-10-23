@@ -13,6 +13,14 @@
       "width": 1920,
       "height": 1080,
       "sha256": "543fa2cd633f9c6795ce58fc73fda8d9f469558040053cd69d78425a35bdf3fc"
+    },
+    {
+      "file": "home-stability-native-api30-720p.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "344d1f828b8afaf88ef5bcdad69691fd2a592625d7593bdf8fc83a47838e148e",
+      "source_commit": "c78f4ffea09d95d7d76d7a5e20d17318e20df611",
+      "qualifiers": "w640dp-h360dp-land-xhdpi"
     }
   ]
 }

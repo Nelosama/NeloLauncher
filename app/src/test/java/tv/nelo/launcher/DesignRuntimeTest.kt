@@ -30,7 +30,13 @@ import java.time.Duration
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @LooperMode(LooperMode.Mode.PAUSED)
 class DesignRuntimeTest {
-    @Test fun homeRendersNativeViewsAndKeepsFocusAfterResume() {
+    @Test fun homeRendersNativeViewsAndKeepsFocusAfterResume() = verifyHome(1920, 1080)
+
+    @Test
+    @Config(sdk = [30], qualifiers = "w640dp-h360dp-land-xhdpi")
+    fun homeAt720pKeepsFocusAfterResume() = verifyHome(1280, 720)
+
+    private fun verifyHome(width: Int, height: Int) {
         val context = RuntimeEnvironment.getApplication()
         val pm = Shadows.shadowOf(context.packageManager)
         val names = listOf("Vídeo local", "Música", "Fotografías", "Biblioteca", "Archivo", "Radio", "Juegos", "Configuración", "Colección", "Reproductor")
@@ -55,18 +61,29 @@ class DesignRuntimeTest {
             val root = activity.window.decorView
             val grid = descendants(root).filterIsInstance<GridView>().first()
             await { grid.count == entries.size }
-            root.measure(View.MeasureSpec.makeMeasureSpec(1920, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(1080, View.MeasureSpec.EXACTLY))
-            root.layout(0, 0, 1920, 1080)
+            root.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY))
+            root.layout(0, 0, width, height)
             grid.requestFocus(); grid.setSelection(2)
             Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(200))
-            root.measure(View.MeasureSpec.makeMeasureSpec(1920, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(1080, View.MeasureSpec.EXACTLY))
-            root.layout(0, 0, 1920, 1080)
-            screenshot(root, "home-native-api30.png")
+            root.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY))
+            root.layout(0, 0, width, height)
+            // Exercise framework D-pad dispatch, not only programmatic setSelection.
+            for ((key, expected) in listOf(android.view.KeyEvent.KEYCODE_DPAD_RIGHT to 3,
+                                          android.view.KeyEvent.KEYCODE_DPAD_LEFT to 2)) {
+                grid.dispatchKeyEvent(android.view.KeyEvent(android.view.KeyEvent.ACTION_DOWN, key))
+                grid.dispatchKeyEvent(android.view.KeyEvent(android.view.KeyEvent.ACTION_UP, key))
+                Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(200))
+                root.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY))
+                root.layout(0, 0, width, height)
+                assertEquals("D-pad selection at ${width}x${height}", expected, grid.selectedItemPosition)
+            }
+            val layoutSelectedCard = grid.selectedView ?: error("Selected card missing")
+            assertTrue("Selected card must fit vertically at ${width}x${height}",
+                layoutSelectedCard.top >= grid.paddingTop && layoutSelectedCard.bottom <= grid.height - grid.paddingBottom)
+            screenshot(root, "home-native-api30-${width}x${height}.png")
             assertEquals("Grid selection after layout (${grid.width}x${grid.height}, children=${grid.childCount}, focus=${grid.hasFocus()}, touch=${grid.isInTouchMode})", entries[2].key, (grid.selectedItem as? AppEntry)?.key)
             assertTrue(descendants(root).filterIsInstance<AppCard>().isNotEmpty())
             assertEquals("Only the focused card may retain a border", 1, descendants(root).filterIsInstance<AppCard>().count { it.face.foreground != null })
-            // Image output is produced by the actual Android View hierarchy and native Skia canvas.
-            screenshot(root, "home-native-api30.png")
             controller.pause().stop().start().resume().visible()
             await { grid.count == entries.size }
             assertEquals(entries[2].key, (grid.selectedItem as AppEntry).key)
@@ -169,6 +186,35 @@ class DesignRuntimeTest {
             assertNotNull(WallpaperStore(context).prepare(android.net.Uri.fromFile(file)))
             assertEquals(android.content.pm.PackageManager.PERMISSION_DENIED, context.checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE))
         } finally { controller.pause().stop().destroy() }
+    }
+    @Test fun rotationSkipsDamagedPhotosAndPreferencesSurviveRecreation() {
+        val context = RuntimeEnvironment.getApplication()
+        val store = WallpaperStore(context)
+        val image = Bitmap.createBitmap(64, 36, Bitmap.Config.RGB_565)
+        val first = store.add(image, "Primera")
+        val damaged = store.add(image, "Dañada")
+        val last = store.add(image, "Última")
+        damaged.file.writeText("invalid jpeg")
+        store.select(first.id)
+        assertNotNull(store.next())
+        assertEquals(last.id, WallpaperStore(context).currentId)
+        assertNotNull(store.next())
+        assertEquals(first.id, store.currentId)
+        store.delete(damaged)
+        assertEquals(2, WallpaperStore(context).photos().size)
+        val prefs = LauncherPreferences(context)
+        prefs.favorites = listOf("app/a", "app/b")
+        prefs.order = listOf("app/b", "app/a")
+        prefs.hidden = listOf("app/b")
+        prefs.slideshow = true
+        prefs.rotationMinutes = 5
+        val restored = LauncherPreferences(context)
+        assertEquals(listOf("app/a", "app/b"), restored.favorites)
+        assertEquals(listOf("app/b", "app/a"), restored.order)
+        assertEquals(listOf("app/b"), restored.hidden)
+        assertTrue(restored.slideshow)
+        assertEquals(5, restored.rotationMinutes)
+        image.recycle()
     }
     private fun await(condition: () -> Boolean) {
         val deadline = System.nanoTime() + 15_000_000_000L

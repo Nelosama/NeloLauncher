@@ -8,3 +8,9 @@
 El reloj usa el tiempo del runtime de pruebas. Las imágenes se generan ejecutando `./gradlew :app:testDebugUnitTest`, en `app/build/outputs/native-view-renders/`. Son renders del código implementado, no una maqueta HTML, una interfaz pintada encima de una referencia ni un montaje de tvOS.
 
 La elevación GPU, las animaciones en movimiento, el firmware y el mando requieren validación en Android TV real o en un emulador estable. No se atribuyen a estas imágenes mediciones de FPS, memoria o latencia.
+
+Estabilización: `home-stability-native-api30-720p.png` procede de la prueba
+`homeAt720pKeepsFocusAfterResume`, API 30, 640×360 dp, densidad xhdpi,
+1280×720 px. Se inspeccionó la tarjeta enfocada completa tras corregir el
+recorte vertical. Es un render de vistas/Skia en JVM con datos sintéticos,
+no una captura del Skyworth. Hash y commit de origen en provenance.json.

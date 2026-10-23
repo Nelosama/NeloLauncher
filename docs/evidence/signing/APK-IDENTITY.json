@@ -1,0 +1,48 @@
+{
+  "source_commit": null,
+  "build_commit": null,
+  "github_run_id": null,
+  "signature_verified_for_api": 30,
+  "apks": [
+    {
+      "file": "dist/nelo-tv-0.1.0-debug.apk",
+      "sha256": "a98652a329157322b6a04bf5ca629ed8c0b171b6c27b4102b7dca02630fcee1d",
+      "certificate_sha256": "657ec9a97b2e399a172e266f5946bcce1142a1f00d7eb8fd1a307e4733b8078f",
+      "application_id": "tv.nelo.launcher",
+      "version_code": 1,
+      "version_name": "0.1.0",
+      "min_sdk": 26,
+      "debuggable": true
+    },
+    {
+      "file": "dist/nelo-tv-0.2.0-debug.apk",
+      "sha256": "86c0085b4dd71428edb5ca2d41c0f9509e5604bcadba14c5bb950a99acece05d",
+      "certificate_sha256": "657ec9a97b2e399a172e266f5946bcce1142a1f00d7eb8fd1a307e4733b8078f",
+      "application_id": "tv.nelo.launcher",
+      "version_code": 2,
+      "version_name": "0.2.0",
+      "min_sdk": 26,
+      "debuggable": true
+    },
+    {
+      "file": "app/build/outputs/apk/debug/app-debug.apk",
+      "sha256": "4fdef2def1c5ce75de4a63c5e17f89676fc10cc59bfd640feef4d850b78cffde",
+      "certificate_sha256": "3e57da43ea5bc41778ceb2ff516e36460632309963fc73a555250873ce3288b1",
+      "application_id": "tv.nelo.launcher",
+      "version_code": 2,
+      "version_name": "0.2.0",
+      "min_sdk": 26,
+      "debuggable": true
+    },
+    {
+      "file": "/workspace/work/signing/ci/app/build/outputs/apk/debug/app-debug.apk",
+      "sha256": "6aaecb8e7995291c961fdfc61c259ce6fdeb528aa3f0984e30be8922f72547f8",
+      "certificate_sha256": "f0d75818391647505683d00c7e038c341cc10baaa9e9a681e4dd9febf75e4b44",
+      "application_id": "tv.nelo.launcher",
+      "version_code": 2,
+      "version_name": "0.2.0",
+      "min_sdk": 26,
+      "debuggable": true
+    }
+  ]
+}

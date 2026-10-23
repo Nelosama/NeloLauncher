@@ -1,0 +1,25 @@
+{
+  "original": {
+    "file": "/workspace/work/signing/local-test-reference-v1.apk",
+    "sha256": "79c218856162d45ccca34a3fa1d462cac21f9eebfb4fb50d2bb60387f50f7801",
+    "certificate_sha256": "3e57da43ea5bc41778ceb2ff516e36460632309963fc73a555250873ce3288b1",
+    "application_id": "tv.nelo.launcher",
+    "version_code": 1,
+    "version_name": "0.1.0",
+    "min_sdk": 26,
+    "debuggable": true
+  },
+  "candidate": {
+    "file": "/workspace/work/signing/local-test-signed-v2-atomic.apk",
+    "sha256": "c8988474a4fe9f4c672e1b7595be2f01acd6958e2c160429120649092431d0dd",
+    "certificate_sha256": "3e57da43ea5bc41778ceb2ff516e36460632309963fc73a555250873ce3288b1",
+    "application_id": "tv.nelo.launcher",
+    "version_code": 2,
+    "version_name": "0.2.0",
+    "min_sdk": 26,
+    "debuggable": true
+  },
+  "static_update_compatible": true,
+  "errors": [],
+  "limitation": "Static APK checks only; installation and data retention are not tested."
+}

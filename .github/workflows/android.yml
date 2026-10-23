@@ -13,15 +13,32 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+      # Override the action default "tools platform-tools": tools is obsolete.
       - uses: android-actions/setup-android@v3
-      - uses: gradle/actions/setup-gradle@v4
-      - run: sdkmanager 'platforms;android-35' 'build-tools;34.0.0'
-      - run: ./gradlew :app:assembleDebug :app:lintDebug :app:testDebugUnitTest :app:assembleDebugAndroidTest :fixtures:assembleDebug
-      - uses: actions/upload-artifact@v4
         with:
-          name: nelo-tv-debug
+          packages: 'platform-tools platforms;android-35 build-tools;34.0.0'
+          cmdline-tools-version: '12266719'
+      - uses: gradle/actions/setup-gradle@v4
+      - run: ./gradlew :app:assembleDebug :app:lintDebug :app:testDebugUnitTest :app:assembleDebugAndroidTest :fixtures:assembleDebug
+      - name: Record APK identities and SHA-256
+        env:
+          SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+          BUILD_COMMIT: ${{ github.sha }}
+        run: >-
+          python3 scripts/apk_identity.py manifest --output-dir build/apk-identity
+          --source-commit "$SOURCE_COMMIT" --build-commit "$BUILD_COMMIT"
+          --run-id "$GITHUB_RUN_ID"
+          app/build/outputs/apk/debug/app-debug.apk
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nelo-tv-debug-${{ github.sha }}
           path: |
+            build/apk-identity/
             app/build/outputs/apk/debug/*.apk
-            app/build/reports/lint-results-debug.html
+            app/build/outputs/apk/androidTest/debug/*.apk
+            fixtures/build/outputs/apk/debug/*.apk
+            app/build/reports/lint-results-debug.*
+            app/build/test-results/testDebugUnitTest/
             app/build/reports/tests/testDebugUnitTest/
             app/build/outputs/native-view-renders/

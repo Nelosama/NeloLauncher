@@ -1,0 +1,8 @@
+<resources>
+    <string name="favorites">Favoritas</string>
+    <string name="favorites_page">Favoritas   %1$d / %2$d</string>
+    <string name="local_photos">Fotografías locales</string>
+    <string name="inbox_hint">La bandeja de Nelo funciona sin permisos. Puedes copiar fotos por ADB.</string>
+    <string name="choose_folder">Elige una carpeta</string>
+    <string name="reading_folder">Leyendo carpeta…</string>
+</resources>

@@ -1,0 +1,6 @@
+Source: https://github.com/Nelosama/NeloLauncher/actions/runs/39553469307
+Job: 119067679036
+2026-10-21T06:07:19.2843433Z [command]/usr/local/lib/android/sdk/cmdline-tools/16.0/bin/sdkmanager tools
+ 2026-10-21T06:07:20.9888256Z Warning: Failed to find package 'tools'
+ 2026-10-21T06:07:21.3031612Z                 error = new Error(`The process '${this.toolPath}' failed with exit code ${this.processExitCode}`);
+ 2026-10-21T06:07:21.3033740Z Error: The process '/usr/local/lib/android/sdk/cmdline-tools/16.0/bin/sdkmanager' failed with exit code 1

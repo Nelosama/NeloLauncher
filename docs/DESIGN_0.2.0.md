@@ -32,3 +32,11 @@ Banners y logos se cargan fuera del hilo principal, en caché de 3 MiB. Las foto
 Los archivos y el origen de las imágenes se describen en [screenshots/README.md](screenshots/README.md). Se revisaron imágenes producidas por la jerarquía real de vistas Android a 1920 × 1080 en el runtime de pruebas API 30; no son un montaje de las referencias ni una captura de firmware Skyworth.
 
 La composición, el tamaño de las tarjetas y el enfoque se han inspeccionado en ese render. La percepción de elevación del renderer GPU, el movimiento en un televisor, el overscan y la respuesta del mando físico siguen pendientes. No se declara equivalencia visual o de fluidez con tvOS.
+
+## Corrección de estabilización en alturas pequeñas
+
+El render adicional de 1280 × 720 con 640 × 360 dp reveló que la cabecera,
+favoritas y márgenes dejaban recortada la tarjeta enfocada de la cuadrícula.
+Para alturas menores de 400 dp se compactan tamaños y espacios, conservando
+estructura y navegación. La prueba API 30 ahora exige que la tarjeta seleccionada
+quepa completa verticalmente. Esto valida geometría en JVM, no GPU ni TV físico.

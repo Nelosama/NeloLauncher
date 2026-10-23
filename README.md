@@ -17,9 +17,9 @@ Sin publicidad, recomendaciones comerciales, Internet, telemetría, servicios re
 
 ## Instalar sobre 0.1.0 en Windows
 
-La firma del APK 0.2.0 entregado coincide con la del APK 0.1.0 publicado en este repositorio. El código de versión sube de 1 a 2. No desinstales la versión anterior ni borres sus datos.
+Solo el APK histórico 0.2.0 de dist/ comparte firma con el 0.1.0 publicado; no contiene las correcciones del PR #1. Los APK locales y de Actions del PR tienen firmas diferentes y no deben usarse para actualizar esa instalación. Véase [diagnóstico y recuperación de firma](docs/APK_SIGNING.md). El código de versión sube de 1 a 2. No desinstales la versión anterior ni borres sus datos.
 
-En PowerShell, con Platform Tools y el TV conectado/autorizado:
+Los siguientes comandos son únicamente para un candidato cuya firma ya se haya comparado con el APK instalado y con autorización para modificar el TV. No ejecutarlos con el APK de Actions incompatible. En PowerShell, con Platform Tools y el TV conectado/autorizado:
 
 ```powershell
 $adb = "C:\platform-tools\adb.exe"  # Ajusta esta ruta
@@ -100,3 +100,16 @@ Para medir el dispositivo sin cambiar su HOME:
 ```
 
 Código propio bajo MIT. Conserva `LICENSE`, `NOTICE` y `licenses/` al redistribuir. La [evaluación de FLauncher/LTvLauncher](docs/RESEARCH.md) y los [resultados históricos de 0.1.0](docs/TEST_REPORT_0.1.0.md) permanecen disponibles.
+
+## Estabilización de CI 0.2.0
+
+La rama `codex/fix-nelo-launcher-ci-stability` corrige la instalación del SDK:
+`setup-android@v3` recibía implícitamente `tools platform-tools`; ahora se
+declaran platform-tools, API 35 y Build Tools 34.0.0, sin el paquete obsoleto
+`tools`. Se conservan las cinco tareas de validación y se publican también
+APK de instrumentación, fixture y reportes cuando falla una comprobación.
+
+Java 17, Gradle 8.9, AGP 8.7.3 y Kotlin 2.0.21 se conservan. Los APK debug
+de cada runner pueden usar certificados diferentes: comparar el certificado
+con 0.1.0 antes de intentar actualizar. No desinstalar ni borrar datos para
+resolver una firma incompatible. Véase [informe de estabilización](docs/STABILITY_0.2.0.md).

@@ -1,0 +1,27 @@
+{
+  "original": {
+    "file": "dist/nelo-tv-0.1.0-debug.apk",
+    "sha256": "a98652a329157322b6a04bf5ca629ed8c0b171b6c27b4102b7dca02630fcee1d",
+    "certificate_sha256": "657ec9a97b2e399a172e266f5946bcce1142a1f00d7eb8fd1a307e4733b8078f",
+    "application_id": "tv.nelo.launcher",
+    "version_code": 1,
+    "version_name": "0.1.0",
+    "min_sdk": 26,
+    "debuggable": true
+  },
+  "candidate": {
+    "file": "app/build/outputs/apk/debug/app-debug.apk",
+    "sha256": "4fdef2def1c5ce75de4a63c5e17f89676fc10cc59bfd640feef4d850b78cffde",
+    "certificate_sha256": "3e57da43ea5bc41778ceb2ff516e36460632309963fc73a555250873ce3288b1",
+    "application_id": "tv.nelo.launcher",
+    "version_code": 2,
+    "version_name": "0.2.0",
+    "min_sdk": 26,
+    "debuggable": true
+  },
+  "static_update_compatible": false,
+  "errors": [
+    "Signing certificate differs; update rejected"
+  ],
+  "limitation": "Static APK checks only; installation and data retention are not tested."
+}
